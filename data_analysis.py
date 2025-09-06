@@ -1,2 +1,8 @@
+import pandas as pd
 
-print("Welcome to the group assignent")
+# Load datasets
+dataset1 = pd.read_csv("dataset1.csv")
+dataset2 = pd.read_csv("dataset2.csv")
+
+print(dataset1.head())
+print(dataset2.head())
