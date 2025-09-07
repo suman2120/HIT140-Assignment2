@@ -33,6 +33,7 @@ print('Mean reward:', merged['reward'].mean())  # Mean of 'reward' column
 risk_by_arrival = merged.groupby('rat_arrival_category')['risk'].mean()  # Group by 'rat_arrival_category' and calculate mean risk
 print('\nMean risk-taking by rat arrival category:\n', risk_by_arrival)
 
+# Inferential Statistics - Confidence Intervals and Hypothesis Testing
 # Confidence Intervals
 def proportion_ci(successes, n, confidence = 0.95):     # Function to calculate confidence interval for a proportion
     p_hat = successes / n # Sample proportion
@@ -101,12 +102,4 @@ plt.xticks(rotation=0) # Keep x labels horizontal
 
 plt.tight_layout()  # Adjust layout to prevent overlap
 plt.show()  # Display plots
-
-# Interpretation of Results
-print("\nInterpretation of Results:")
-print("1. Descriptive statistics provide insights into the central tendencies and variability of key variables.")
-print("2. The t-test indicates whether there is a significant difference in landing times between risk-taking and avoidance bats.")
-print("3. The chi-square test assesses the association between risk-taking behavior and timing of rat arrival.")
-print("4. Visualizations help in understanding the distribution and relationships between variables.")
-
 
