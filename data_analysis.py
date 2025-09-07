@@ -41,3 +41,25 @@ print(f'\nRisk-taking proportion: {risk_prop:.3f} (95% CI: {risk_low:.3f}, {risk
 
 reward_prop, reward_low, reward_high = proportion_ci(merged['reward'].sum(), len(merged)) # Confidence interval for 'reward' proportion
 print(f'Reward proportion: {reward_prop:.3f} (95% CI: {reward_low:.3f}, {reward_high:.3f})')
+
+# Hypothesis Testing
+# T-test to compare landing times between risk and avoidance bats
+risk_group = merged[merged['risk'] == 1]['bat_landing_to_food']  # risk-taking bats
+avoidance_group = merged[merged['risk'] == 0]['bat_landing_to_food'] # avoidance bats
+t_stat, p_value = stats.ttest_ind(risk_group, avoidance_group, equal_var=False)  # Welch's t-test
+print(f'\nT-test for landing times between risk and avoidance bats: t-statistic = {t_stat:.3f}, p-value = {p_value:.3f}')
+if p_value < 0.05:
+    print("Result: Significant difference in landing times between risk and avoidance bats.") #Evidence supporting the alternative
+else:
+    print("Result: No significant difference in landing times between risk and avoidance bats.") #Fail to reject the null
+    
+# Chi-square test to examine association between risk and rat arrival timing
+contingency_table = pd.crosstab(merged['risk'], merged['rat_arrival_category'])  # Create contingency table
+chi2, chi_p, dof, expected = stats.chi2_contingency(contingency_table) 
+print('\nChi-square test (risk vs. early/late rat arrival) p-value:', chi_p)
+if chi_p < 0.05:
+    print("Result: Significant association between risk-taking and rat arrival timing.") #Evidence supporting the alternative
+else:
+    print("Result: No significant association between risk-taking and rat arrival timing.") #Fail to reject the null
+    
+# Data Visualization
