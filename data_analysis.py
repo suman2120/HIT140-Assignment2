@@ -18,4 +18,10 @@ if 'seconds_after_rat_arrival' not in dataset1.columns:
                                              pd.to_datetime(dataset1['rat_period_start'])).dt.total_seconds()  # convert time difference to seconds
     
 merged = pd.merge(dataset1, dataset2, on='month', how='inner')  # Merge datasets on 'month' column
-print("Merged Data Head:", merged.head())
+
+# Create a new categorical variable based on median split
+merged['rat_arrival_category'] = np.where(merged['seconds_after_rat_arrival'] < merged['seconds_after_rat_arrival'].median(),'early','late')
+
+# Descriptive Statistics
+desc_stats = merged[['bat_landing_to_food', 'seconds_after_rat_arrival', 'risk', 'reward']].describe()
+print("Descriptive Statistics:\n", desc_stats)
